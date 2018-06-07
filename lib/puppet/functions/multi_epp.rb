@@ -1,12 +1,25 @@
-#Puppet::Functions.create_function(:multi_epp, Puppet::Functions::InternalFunction) do
-module Puppet::Parser::Functions
-  require 'epp'
-  newfunction(:multi_epp, :type => :rvalue) do | args |
-    
-    templates = args[0]
-    datas = args[1]
-    env_name = self.compiler.environment
-    
+Puppet::Functions.create_function(:multi_epp) do
+
+  dispatch :no_param do
+  end
+
+  dispatch :epp_templates do
+    scope_param
+    param 'Array[String]', :templates
+    optional_param 'Hash[Pattern[/^\w+$/], Any]', :parameters
+  end
+
+
+  def no_param
+    raise ArgumentError, "#{self.class.name}(): must be provided at least one epp template"
+  end
+
+  def epp_templates(scope, templates, params = {})
+
+    template_path = nil
+    contents = nil
+    env_name = scope.compiler.environment
+
     templates.each do |template_file|
       if template_path = Puppet::Parser::Files.find_template(template_file, env_name)
         contents = call_function('epp', template_path, params)
@@ -22,4 +35,5 @@ module Puppet::Parser::Functions
 
     contents
   end
+
 end
