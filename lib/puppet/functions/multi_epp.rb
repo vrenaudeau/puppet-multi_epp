@@ -1,4 +1,6 @@
-Puppet::Functions.create_function(:multi_epp, Puppet::Functions::InternalFunction) do
+#Puppet::Functions.create_function(:multi_epp, Puppet::Functions::InternalFunction) do
+module Puppet::Parser::Functions
+newfunction(:multi_epp, :type => :rvalue) do | args |
 
   dispatch :no_param do
   end
