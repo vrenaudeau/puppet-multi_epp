@@ -1,5 +1,6 @@
 #Puppet::Functions.create_function(:multi_epp, Puppet::Functions::InternalFunction) do
 module Puppet::Parser::Functions
+require 'epp'
 newfunction(:multi_epp, :type => :rvalue) do | args |
   
   templates = args[0]
