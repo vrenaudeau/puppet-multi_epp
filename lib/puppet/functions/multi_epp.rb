@@ -1,5 +1,5 @@
 # encoding: UTF-8
-Puppet::Functions.create_function(:multi_epp, Puppet::Functions::InternalFunction) do
+Puppet::Functions.create_function(:multi_epp) do
 
   dispatch :no_param do
   end
